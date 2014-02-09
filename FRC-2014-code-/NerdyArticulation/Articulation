@@ -1,0 +1,55 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) FIRST 2008. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package edu.wpi.first.wpilibj.templates;
+
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.command.Command;
+import NerdHerd.Command.*;
+
+public class NerdyArticulation{
+    private int i = 0;
+    private CANJaguar CANJagMain, CANJagSub;
+    private Solenoid Solenoid;
+    private Button Button;
+    private CANsRotateCCW CANsRotateCCW;
+    private Lock Lock;
+    public NerdyArticulation(){
+        try{
+        Solenoid = new Solenoid(1);
+        CANJagMain = new CANJaguar(7);
+        CANJagSub = new CANJaguar(8);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        CANsRotateCCW = new CANsRotateCCW(); 
+        Lock = new Lock();
+    
+        
+    }
+    
+    public void Ready(){
+
+        Button.cancelWhenPressed(CANsRotateCCW);
+        i++;
+    }
+    
+    public void Set(){
+        Button.whenPressed(Lock);
+        i++;
+    }
+    public void Launch(){
+        if( i == 2){
+            Solenoid.set(true);
+        }
+        i = 0;
+    }
+    
+    
+}

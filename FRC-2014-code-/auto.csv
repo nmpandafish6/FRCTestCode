@@ -1,0 +1,12 @@
+Game Timeline,Sequence of Events,Comments,Choosen
+,Calibration period,Need to get many readings from accel and gyro to average to determine bias accel and bias rate to subtract out during operation.,
+t=0 sec,Start of Autonomous (randomly selected initial Hot Goal),Start reprogrammable-time timer (see below rationale),
+,Determine non-hot goal,This is done first so that appropriate amount to move forward (may need more travel if shooting cross field).  Requires vision processing.,
+,Move forward towards goal (into end zone),"Need to determine how much to move forward (cross field shot may require more travel to get shooting mechanism into sweet spot). Options for moving a set distance: 1) integrate accel twice to get position (closed-loop option), 2) use camera (closed-loop option), 3) use range sensor (ping) (closed-loop option), 4) set number of motor rotations (requires encoders)  (open-loop option)",Option 1; this requires a calibration portion to determine the acceleration bias
+,Rotate to non-hot goal,"Q:How much to rotate?  A: Based upon robot location.  What is FOV of camera? Will both goals be visible simultaneously?  Even if not, the goal in front of robot will be visible and that is enough to determine which goal is hot.  From the geometry of the field the amount to rotate can be determined.  To measure angle, use camera -derived angle, mag compass, or gyrocompassing. ","Camera will not always be pointing towards goals during non-autonomous play, but yet angular rate control is needed.  Therefore, rate control used during non-autonomous could also be used during autonomous.  Therefore, either mag compass, or gyrocompassing will be used.  Will need to have calibration for either one."
+,"Calculate ball launch parameters, if any","If variable force launch mechanism is used, then then this step is needed.",
+,Wait for Hot Goal to switch,Could use 5+ second timer to expire; or could watch for switch,"Use reprogrammer timer (between ~5 and ~8 sec); this will allow coordination with other alliance members to shoot balls at different times so that there won't be ball ""collisions"""
+t=5 sec,Switch Hot Goal,,
+,Wait for timer to expire,,
+,Launch ball at end of timer,,
+t=10 sec,End of Autonomous,,
